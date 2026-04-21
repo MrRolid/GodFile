@@ -61,7 +61,12 @@ $i18n = [
         'js_start' => '--- PROCESS STARTED ---', 'js_plan' => 'PHASE 1: Planning...', 'js_img' => 'Creating image:', 'js_code' => 'Generating code:',
         'js_done' => 'Done. Log saved.', 'js_err' => 'FATAL ERROR', 'js_err_api' => 'API Error:',
         'setup_title' => 'Initial Setup', 'setup_desc' => 'Create the main administrator account.',
-        'img_provider' => 'Image Generator:', 'img_api_key' => 'API Key (Images):', 'test_img_api' => 'Test Image API'
+        'img_provider' => 'Image Generator:', 'img_api_key' => 'API Key (Images):', 'test_img_api' => 'Test Image API',
+        'toggle_preview' => 'Toggle Preview', 'error_word' => 'Error', 'testing' => 'Testing...',
+        'timeout_err' => 'Timeout 504: Host cut the connection, but the script runs in background. Wait 20s and refresh.',
+		'new_pw' => 'New password (min 8 chars)',
+		'save_pw' => 'Save',
+        'server_err' => 'Server Error:\n'
     ],
     'cs' => [
         'nav_editor' => 'Editor', 'nav_gallery' => 'Galerie', 'nav_users' => 'Uživatelé', 'nav_settings' => 'Nastavení', 'nav_logout' => 'Odhlásit',
@@ -81,7 +86,12 @@ $i18n = [
         'js_start' => '--- START PROCESU ---', 'js_plan' => 'FÁZE 1: Plánování...', 'js_img' => 'Tvořím obrázek:', 'js_code' => 'Generuji kód:',
         'js_done' => 'Hotovo. Log zapsán.', 'js_err' => 'FATÁLNÍ CHYBA', 'js_err_api' => 'Chyba API:',
         'setup_title' => 'Prvotní instalace', 'setup_desc' => 'Vytvoř si hlavní administrátorský účet.',
-        'img_provider' => 'Generátor obrázků:', 'img_api_key' => 'API Klíč (Obrázky):', 'test_img_api' => 'Test připojení API (Obrázky)'
+        'img_provider' => 'Generátor obrázků:', 'img_api_key' => 'API Klíč (Obrázky):', 'test_img_api' => 'Test připojení API (Obrázky)',
+        'toggle_preview' => 'Skrýt/Zobrazit náhled', 'error_word' => 'Chyba', 'testing' => 'Testuji...',
+        'timeout_err' => 'Timeout 504: Host spojení ukončil, kód běží na pozadí. Počkej 20s a obnov stránku.',
+		'new_pw' => 'Heslo min. 8 znaků',
+		'save_pw' => 'Ulož',
+        'server_err' => 'Chyba serveru:\n'
     ],
     'es' => [
         'nav_editor' => 'Editor', 'nav_gallery' => 'Galería', 'nav_users' => 'Usuarios', 'nav_settings' => 'Ajustes', 'nav_logout' => 'Salir',
@@ -101,7 +111,13 @@ $i18n = [
         'js_start' => '--- PROCESO INICIADO ---', 'js_plan' => 'FASE 1: Planificando...', 'js_img' => 'Creando imagen:', 'js_code' => 'Generando código:',
         'js_done' => 'Hecho. Registro guardado.', 'js_err' => 'ERROR FATAL', 'js_err_api' => 'Error de API:',
         'setup_title' => 'Configuración Inicial', 'setup_desc' => 'Crea la cuenta de administrador principal.',
-        'img_provider' => 'Generador de imágenes:', 'img_api_key' => 'Clave API (Imágenes):', 'test_img_api' => 'Test Image API'
+        'img_provider' => 'Generador de imágenes:', 'img_api_key' => 'Clave API (Imágenes):', 'test_img_api' => 'Test Image API',
+        'toggle_preview' => 'Alternar Vista', 'error_word' => 'Error', 'testing' => 'Probando...',
+        'timeout_err' => 'Timeout 504: Host desconectado, script en segundo plano. Espere 20s y actualice.',
+        'new_pw' => 'Nueva contraseña (min 8)',
+		'save_pw' => 'Guardar',
+		'server_err' => 'Error del servidor:\n'
+		
     ],
     'zh' => [
         'nav_editor' => '编辑器', 'nav_gallery' => '图库', 'nav_users' => '用户', 'nav_settings' => '设置', 'nav_logout' => '登出',
@@ -121,7 +137,12 @@ $i18n = [
         'js_start' => '--- 开始 ---', 'js_plan' => '规划中...', 'js_img' => '创建图片：', 'js_code' => '生成代码：',
         'js_done' => '完成。', 'js_err' => '致命错误', 'js_err_api' => 'API 错误：',
         'setup_title' => '初始设置', 'setup_desc' => '创建主管理员帐户。',
-        'img_provider' => '图像提供商:', 'img_api_key' => 'API 密钥 (图像):', 'test_img_api' => 'Test Image API'
+        'img_provider' => '图像提供商:', 'img_api_key' => 'API 密钥 (图像):', 'test_img_api' => 'Test Image API',
+        'toggle_preview' => '切换预览', 'error_word' => '错误', 'testing' => '测试中...',
+        'timeout_err' => '超时 504：主机断开连接，脚本在后台运行。等待20秒刷新。',
+		'new_pw' => '新密码 (最少 8)',
+		'save_pw' => '保存',
+        'server_err' => '服务器错误：\n'
     ]
 ];
 
@@ -130,8 +151,14 @@ function t($key) {
     return $i18n[$lang][$key] ?? $i18n['en'][$key] ?? $key; 
 }
 
-// --- DATABASE CONFIGURATION ---
+// --- DATABASE CONFIGURATION & PROTECTION ---
 $db_file = __DIR__ . "/app_data.sqlite";
+
+$htaccess_path = __DIR__ . "/.htaccess";
+if (!file_exists($htaccess_path)) {
+    @file_put_contents($htaccess_path, "<FilesMatch \"\\.sqlite$\">\nOrder allow,deny\nDeny from all\n</FilesMatch>\nOptions -Indexes\n");
+}
+
 $pdo = new PDO("sqlite:" . $db_file);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -687,7 +714,6 @@ if ($action === "test_img_api") {
         }
         
     } else {
-        // Pollinations blocks strict clients, simple User-Agent required
         $ch = curl_init("https://image.pollinations.ai/prompt/" . urlencode($prompt) . "?nologo=true&width=256&height=256");
         curl_setopt_array($ch, [
             CURLOPT_RETURNTRANSFER => true, 
@@ -753,7 +779,6 @@ $img_context\n\nAKTUÁLNÍ KÓD:\n" . ($current_code ?: "Empty project.");
         die(json_encode(["status" => "error", "message" => $ai_res["error"]]));
     }
     
-    // Markdown JSON block cleaning
     $clean = str_replace(["`"."``json", "`"."``"], '', $ai_res["text"]);
     echo trim($clean) ?: json_encode(["status" => "error", "message" => "AI failed to return JSON plan."]); 
     exit;
@@ -766,7 +791,6 @@ if ($action === "build_file") {
     
     $target_file = basename($_POST["file"] ?? "unknown.txt");
     
-    // --- SECURITY: RESTRICT ALLOWED FILE EXTENSIONS ---
     $ext = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
     if (!in_array($ext, ['html', 'css', 'js'])) {
         die(json_encode(["status" => "error", "message" => "Security block: Invalid file extension."]));
@@ -810,7 +834,6 @@ Vrať POUZE čistý kód. Žádný Markdown. Nic nevysvětluj.
     
     $code = $ai_res["text"];
     
-    // Robust parsing for possible markdown ticks returned by the model
     if (preg_match('/`'."``[a-z]*\n(.*?)\n`"."``/is", $code, $matches)) {
         $code = $matches[1];
     } else {
@@ -1101,7 +1124,7 @@ if ($action === "restore") {
 
     <nav>
         <a href="?" class="<?= $page=="chat"?"active":"" ?>"><?= t('nav_editor') ?></a>
-        <a href="#" onclick="togglePreview(); return false;" id="btn-toggle-preview">O/C Preview</a>
+        <a href="#" onclick="togglePreview(); return false;" id="btn-toggle-preview"><?= t('toggle_preview') ?></a>
         <a href="?page=gallery" class="<?= $page=="gallery"?"active":"" ?>"><?= t('nav_gallery') ?></a>
         <?php if($is_superadmin): ?>
             <a href="?page=users" class="<?= $page=="users"?"active":"" ?>"><?= t('nav_users') ?></a>
@@ -1389,9 +1412,9 @@ if ($action === "restore") {
                 return JSON.parse(text); 
             } catch (e) { 
                 if (text.toLowerCase().includes('504') || text.toLowerCase().includes('timeout')) {
-                    throw new Error("Timeout 504: Host spojení ukončil, ale kód vzadu stále běží. Počkej 20 sekund a obnov stránku.");
+                    throw new Error("<?= t('timeout_err') ?>");
                 }
-                throw new Error("Chyba serveru:\n" + text.substring(0, 200)); 
+                throw new Error("<?= t('server_err') ?>" + text.substring(0, 200)); 
             }
         }
         
@@ -1435,7 +1458,7 @@ if ($action === "restore") {
                                 appendToConsole("-> OK", "#10b981"); 
                                 allMod.push(img.filename); 
                             } else {
-                                appendToConsole("-> " + (res.message || "Chyba"), "#ef4444");
+                                appendToConsole("-> " + (res.message || "<?= t('error_word') ?>"), "#ef4444");
                             }
                         } catch(e) { 
                             appendToConsole("-> " + e.message, "#ef4444"); 
@@ -1451,7 +1474,7 @@ if ($action === "restore") {
                                 appendToConsole(`-> OK.`, "#10b981"); 
                                 allMod.push(file); 
                             } else {
-                                appendToConsole("-> <?= t('js_err_api') ?> " + (res.message || "Chyba"), "#ef4444");
+                                appendToConsole("-> <?= t('js_err_api') ?> " + (res.message || "<?= t('error_word') ?>"), "#ef4444");
                             }
                         } catch(e) { 
                             appendToConsole("-> " + e.message, "#ef4444"); 
@@ -1481,7 +1504,7 @@ if ($action === "restore") {
             if (res.status === "success") {
                 location.reload(); 
             } else {
-                alert("Chyba: " + res.message);
+                alert("<?= t('error_word') ?>: " + res.message);
             }
         }
 
@@ -1501,21 +1524,21 @@ if ($action === "restore") {
                 });
                 btn.innerText = "OK";
             } else { 
-                alert("Chyba: " + res.message); 
-                btn.innerText = "Error"; 
+                alert("<?= t('error_word') ?>: " + res.message); 
+                btn.innerText = "<?= t('error_word') ?>"; 
             }
         }
 
         async function testApi() {
             document.getElementById("test-result").style.display = "block"; 
-            document.getElementById("test-raw").innerText = "Testuji...";
+            document.getElementById("test-raw").innerText = "<?= t('testing') ?>";
             const res = await fetchJSON("test_api", {}); 
             document.getElementById("test-raw").innerText = "HTTP: " + res.http_code + "\n\n" + res.raw;
         }
         
         async function testImgApi() {
             document.getElementById("test-img-result").style.display = "block"; 
-            document.getElementById("test-img-raw").innerText = "Testuji...";
+            document.getElementById("test-img-raw").innerText = "<?= t('testing') ?>";
             const res = await fetchJSON("test_img_api", {}); 
             document.getElementById("test-img-raw").innerText = "HTTP Status: " + res.http_code + "\n\n" + res.raw;
         }
