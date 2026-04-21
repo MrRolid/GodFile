@@ -1,3 +1,9 @@
+[0.4.1] alpha - 2026-04-22 
+Security — Critical Fixes
+* Automated protection: The script checks for the existence of an ".htaccess" file on startup. If missing, it generates one automatically.
+* Database download blocked: Added a rule to ".htaccess" that prevents the web server from serving ".sqlite" files. This fixes a critical vulnerability where anyone could download the database via URL and extract API keys or password hashes.
+* Directory listing disabled: Added the "Options -Indexes" directive to prevent the browser from displaying a directory listing if an index file is missing.
+
 [0.4.0] alpha - 2026-04-22 
 Security — Critical Fixes
 * Removed allow-same-origin from iframe sandbox — preview iframe now uses sandbox="allow-scripts allow-forms" only, preventing untrusted AI-generated content from accessing the parent window DOM, reading CSRF tokens, or performing actions on behalf of the logged-in user
