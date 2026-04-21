@@ -1,0 +1,41 @@
+Bike web:
+Create a website for a custom bicycle manufacturer specializing in fulfilling 
+special customer requests and sourcing rare components that are not commercially 
+available. Single-page layout (index.html) with a separate contact page 
+(contact.html).
+
+DESIGN:
+- Light, clean color scheme with white and light gray surfaces
+- Typography and layout that express precision, craftsmanship, and engineering 
+  excellence
+- Modern minimal aesthetic, generous whitespace, sharp details
+- Hero section with a strong headline and a clear call-to-action button
+- Sections: About, Services, How It Works (3 steps), Gallery placeholder, 
+  Testimonials, CTA banner
+- Sticky navigation header with smooth scroll to sections
+- Fully responsive, mobile-first
+
+CONTACT PAGE (contact.html):
+- Contact form using formsubmit.co (no PHP)
+- Address, phone, email, opening hours
+- Link back to main page
+
+SEO & SOCIAL:
+- Semantic HTML5 (header, main, section, footer, article)
+- Complete meta tags: title, description, keywords, author, robots
+- Open Graph tags for Facebook and LinkedIn (og:title, og:description, 
+  og:image, og:url, og:type)
+- Twitter Card meta tags (twitter:card, twitter:title, twitter:description, 
+  twitter:image)
+- Canonical URL tag
+- Structured data (JSON-LD): LocalBusiness schema with name, address, 
+  telephone, openingHours, serviceArea
+- Sitemap reference in meta
+- Favicon meta tags (apple-touch-icon, theme-color)
+- Fast loading: no external JS frameworks, inline critical CSS
+
+CONTENT:
+- Company name: VeloForge Custom Bicycles
+- Tagline: "Built to your exact specification. Down to the last millimeter."
+- All placeholder images from loremflickr.com using keywords: 
+  bicycle, cycling, precision
