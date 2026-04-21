@@ -1,0 +1,23 @@
+# Databáze s hesly a nastaveními – NIKDY do repozitáře!
+app_data.sqlite
+*.sqlite
+*.db
+
+# Vygenerované weby (výstup AI) – patří uživateli, ne do repozitáře
+website_output/
+/website_output
+
+# OS smetí
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# PHP logy
+*.log
+error_log
