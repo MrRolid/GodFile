@@ -1,0 +1,3 @@
+- GrapesJS integration – replace the plain iframe with a visual editor where AI generates the code and the editor renders it interactively
+- SSE streaming from a single-file PHP AI project – instead of polling JSON, AI responses would stream into the terminal in real time
+- PocketBase admin UI patterns – their admin panel is exceptionally well designed for self-hosted tools
