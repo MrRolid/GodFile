@@ -1,2 +1,26 @@
+[0.4.0] alpha - 2026-04-22 
+Security — Critical Fixes
+* Removed allow-same-origin from iframe sandbox — preview iframe now uses sandbox="allow-scripts allow-forms" only, preventing untrusted AI-generated content from accessing the parent window DOM, reading CSRF tokens, or performing actions on behalf of the logged-in user
+* Introduced role-based authorization — added $is_superadmin flag (user ID 1); update_settings and user_ops endpoints now return HTTP 403 for non-superadmin users; * Users and Settings pages are hidden in the UI for regular accounts
+* Replaced default admin/admin account with first-run setup wizard — application no longer seeds a default credential; on first launch with no users, a bootstrap form requires creation of the administrator account (min. 8 characters enforced)
+* Enabled TLS certificate verification — removed CURLOPT_SSL_VERIFYPEER => false and CURLOPT_SSL_VERIFYHOST => 0 from all cURL calls (Google API, OpenAI, Together AI, Pollinations, fetchmodels, testapi, testimgapi, genimage)
+* Added file extension whitelist in build_file — only .html, .css, and .js are accepted as output filenames; any other extension (e.g. .php, .htaccess) is rejected with HTTP 403 before writing to disk
+* Fixed image upload to derive extension from verified MIME type — server now generates a safe filename using a mime → extension map (image/jpeg → jpg, etc.) instead of trusting the user-supplied filename extension
+
+Security — Improvements
+* Secure session cookie flags — session_set_cookie_params() with httponly: true, secure: true (when HTTPS), and samesite: Lax is now called before session_start()
+* CSRF-protected logout — logout link now includes a CSRF token (?action=logout&token=...) verified server-side with hash_equals()
+* Login tarpit — added sleep(2) delay on failed login attempts to slow brute-force attacks
+* postMessage origin validation — inspector iframe now sends CSRF token with element-selected messages; parent validates token before acting
+
+Changed
+* Settings and Users navigation links are conditionally rendered for superadmin only
+* Superadmin account (ID 1) cannot be deleted from the Users management UI
+* call_ai() and all cURL requests cleaned of debug SSL bypass flags
+
+Notes
+* SSRF via local_url is mitigated by restricting settings changes to superadmin only; a URL allowlist is not yet enforced
+* API keys remain stored as plaintext in SQLite; treat DB file access accordingly
+
 Version 0.3 - alpha
- - first public version
+ * first public version
